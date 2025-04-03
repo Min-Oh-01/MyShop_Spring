@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>공지사항 목록</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #87CEEB, #1E90FF, #4682B4);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .notice-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: 700px;
+      max-width: 90%;
+    }
+
+    .notice-title {
+      color: #005f99;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .notice-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .notice-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .notice-item a {
+      text-decoration: none;
+      color: #005f99;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .notice-item a:hover {
+      text-decoration: underline;
+    }
+
+    .notice-date {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .btn-add {
+      display: block;
+      width: fit-content;
+      background: #007acc;
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      margin: 20px auto;
+    }
+
+    .btn-add:hover {
+      background: #005f99;
+    }
+    .notice-id {
+      font-weight: bold;
+      margin-right: 8px;
+      color: #005f99;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<nav th:replace="~{/fragments/header.html :: header}"></nav>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="notice-box">
+    <h1 class="notice-title">📢 공지사항 목록</h1>
+    <ul class="notice-list">
+      <li class="notice-item" th:each="notice, iterStat : ${notices}">
+        <span class="notice-id" th:text="${notice.id}"></span>
+        <a th:href="@{/notices/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+        <span class="notice-date" th:text="${notice.createdAt}"></span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

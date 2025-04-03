@@ -1,0 +1,53 @@
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark px-4" th:fragment="header"
+     style="background-color: transparent;">
+  <a class="navbar-brand d-flex align-items-center" href="/">
+<!--    <img src="/static/images/logo.png" alt="MyShop 로고" width="40" height="40" class="me-2">-->
+    <span class="fw-bold fs-5" style="color:#1D6A88">MyShop</span>
+  </a>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+          aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarMenu" style="color:#1D6A88">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link fw-semibold" href="/productList" style="color:#1D6A88">상품 목록</a>
+      </li>
+
+      <!-- 로그인 O인 경우 -->
+      <li class="nav-item" sec:authorize="isAuthenticated()">
+        <span class="nav-link text-light fw-semibold">
+          <div style="color: #FF5733; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">어서오세요. <span sec:authentication="name"></span>님</div>
+        </span>
+      </li>
+      <li class="nav-item" sec:authorize="isAuthenticated()">
+        <form action="/memberPage" method="post" class="d-inline">
+          <a class="nav-link fw-semibold" href="/memberPage" style="color:#1D6A88">마이페이지</a>
+        </form>
+      </li>
+      <li class="nav-item" sec:authorize="isAuthenticated()">
+        <form action="/productRegister" method="post" class="d-inline">
+          <a class="nav-link fw-semibold" href="/productRegister" style="color:#1D6A88">상품 등록</a>
+        </form>
+      </li>
+      <li class="nav-item" sec:authorize="isAuthenticated()">
+        <form action="/logout" method="post" class="d-inline">
+          <button type="submit" class="btn btn-outline-dark">로그아웃</button>
+        </form>
+      </li>
+
+      <!-- 로그인 X인 경우 -->
+      <li class="nav-item" sec:authorize="isAnonymous()">
+        <form action="/memberLogin" method="get" class="d-inline">
+          <button type="submit" class="btn btn-outline-dark">로그인</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+</html>

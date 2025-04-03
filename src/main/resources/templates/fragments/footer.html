@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<style>
+  p {
+    font-family: 'Bagel Fat One', system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+      flex: 1;
+  }
+
+  footer {
+      background-color: #A8DCE7;
+      padding: 20px 0;
+      text-align: center;
+      color: black;
+  }
+</style>
+</head>
+<body>
+<footer th:fragment="footer" style="background-color: #A8DCE7; padding: 20px 0; text-align: center; color: black;">
+  <p style="font-size: 16px; margin: 0;">© 2025 UsedTrade Market</p>
+</footer>
+</body>
+</html>

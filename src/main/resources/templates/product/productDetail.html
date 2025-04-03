@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF, #4682B4);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin-top:10%;
+}
+
+.content-wrapper {
+    max-width: 900px;
+    width: 100%;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: Verdana, sans-serif;
+    backdrop-filter: blur(10px); /* 블러 효과 추가 */
+}
+
+.product-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-image-container {
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.product-title {
+    color: #F90;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.product-price {
+    font-size: 1em;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-dark {
+    background-color: #333;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* 미디어 쿼리 */
+@media (min-width: 768px) {
+    .product-layout {
+        flex-direction: row;
+        align-items: center;
+    }
+    .product-image-container {
+        flex: 1;
+    }
+    .product-details {
+        flex: 1;
+    }
+}
+
+
+
+
+        .wave-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+    </style>
+</head>
+<body>
+<!-- Header -->
+<nav th:replace="~{/fragments/header.html :: header}"></nav>
+
+<!-- Main Content -->
+<main class="container py-5">
+    <div class="content-wrapper">
+        <div class="card">
+            <div class="card-body">
+                <div class="product-layout">
+                    <div class="product-image-container">
+                        <img th:src="${product.productImage}" class="product-image" alt="상품 이미지">
+                    </div>
+                    <div class="product-details">
+                        <h5 th:text="'게시글 올린 날짜: ' + ${#temporals.format(product.productDate, 'yyyy-MM-dd')}"></h5>
+                        <h1 th:text="'제품 이름: ' + ${product.productName}" class="product-title"></h1>
+                        <div class="product-info">
+                            <label class="label">개요</label>
+                            <p th:text="${product.productOutline}" class="product-outline"></p>
+                        </div>
+                        <div class="product-info">
+                            <label class="label">가격</label>
+                            <p th:text="${#numbers.formatInteger(product.productPrice, 3, 'COMMA') + '원'}" class="product-price"></p>
+                        </div>
+                        <div class="product-info">
+                            <label class="label">사용 기간</label>
+                            <p th:text="${product.startDate} + ' ~ ' + ${product.endDate}"></p>
+                        </div>
+                        <div class="button-container">
+                            <a href="/productList" class="btn btn-dark">상품 목록</a>
+                            <a th:href="@{'/productEdit/' + ${product.id}}" class="btn btn-primary">상품 수정</a>
+                            <form action="/productDelete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                                <input th:value="${product.id}" type="hidden" name="id">
+                                <button type="submit" class="btn btn-danger">상품 삭제</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- footer  -->
+
+<div class="wave-container">
+    <svg viewBox="0 0 1440 320">
+        <path fill="#98d4f3" d="M0,224L80,208C160,192,320,160,480,181.3C640,203,800,277,960,277.3C1120,277,1280,203,1360,165.3L1440,128V320H0Z"></path>
+    </svg>
+</div>
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+</html>
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>마이 페이지</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-color: #EEE;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .card {
+        max-width: 900px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+    }
+    .profile-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .fw-semibold {
+        font-size: 1.2em;
+    }
+    .btn-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+    }
+    .btn-secondary { background-color: #6c757d; }
+    .btn-primary { background-color: #007bff; }
+    .btn-danger { background-color: #dc3545; }
+    .btn:hover { opacity: 0.8; }
+  </style>
+
+</head>
+<body>
+<!-- Header -->
+<nav th:replace="~{/fragments/header.html :: header}"></nav>
+
+<!-- Main Content -->
+<main class="container">
+  <div class="card">
+    <h2 class="fw-bold">마이 페이지</h2>
+    <div class="profile-container">
+      <img th:src="${Member.userImage != null ? Member.userImage : '/images/icon1.png'}" alt="Profile Image" class="profile-image">
+      <div class="profile-details">
+        <p><strong>이메일:</strong> <span th:text="${Member.email}"></span></p>
+        <p><strong>이름:</strong> <span th:text="${Member.name}"></span></p>
+        <p><strong>가입날짜:</strong> <span th:text="${Member.joinDate}"></span></p>
+      </div>
+    </div>
+    <div class="btn-container">
+      <a href="/" class="btn btn-secondary">홈으로</a>
+      <a href="/memberEdit" class="btn btn-primary">회원정보 수정</a>
+      <form action="/memberDelete" method="post" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+        <input th:value="${Member.id}" type="hidden" name="id">
+        <button type="submit" class="btn btn-danger">회원 탈퇴</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- footer  -->
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+</html>
